@@ -1,0 +1,9 @@
+<div class="task-card">
+  <h3>{{ task.title }}</h3>
+  <p>{{ task.description }}</p>
+  <div class="card-actions">
+    <button (click)="markComplete()" class="complete-btn">Complete</button>
+    <a [routerLink]="['/tasks', index]" ><button class="view-btn">View</button></a>
+    <a [routerLink]="['/tasks', index, 'edit']" ><button class="edit-btn">Edit</button></a>
+  </div>
+</div>

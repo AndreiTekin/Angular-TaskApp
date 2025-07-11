@@ -1,0 +1,74 @@
+.task-list {
+      width: 100%;
+    }
+    
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .btn-add {
+      background-color: var(--success);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .task-card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .task-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+    
+    .task-card h3 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+    
+    .card-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .view-btn, .edit-btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    
+    .view-btn {
+      background-color: var(--primary-light);
+      color: white;
+    }
+    
+    .edit-btn {
+      background-color: var(--warning);
+      color: white;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      background: white;
+      border-radius: 8px;
+      grid-column: 1 / -1;
+    }
