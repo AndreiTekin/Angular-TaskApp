@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
@@ -7,70 +7,115 @@ import { Task } from '../../models/task.model';
 @Component({
   selector: 'app-task-edit',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   template: `
-    <div>
+    <div class="form-container">
       <h2>Edit Task</h2>
-      <form #taskForm="ngForm" (ngSubmit)="onSubmit()">
+      
+      @if (errorMessage) {
+        <div style="color: red;">{{ errorMessage }}</div>
+      }
+      
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
         <div>
           <label for="title">Title</label>
-          <input 
-            type="text" 
-            id="title"
-            name="title"
-            [(ngModel)]="task.title"
-            required
-            #title="ngModel">
-          @if (title.invalid && (title.dirty || title.touched)) {
-            <div>Title is required</div>
+          <input id="title" type="text" formControlName="title">
+          @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
+            <div style="color: red;">Title is required</div>
           }
         </div>
         
         <div>
           <label for="description">Description</label>
-          <textarea 
-            id="description"
-            name="description"
-            [(ngModel)]="task.description"
-            rows="4"></textarea>
+          <textarea id="description" formControlName="description"></textarea>
         </div>
         
-        <div>
-          <button type="submit" [disabled]="taskForm.invalid">Update Task</button>
-          <button type="button" (click)="cancel()">Cancel</button>
-        </div>
+        <button type="submit" [disabled]="taskForm.invalid || isSubmitting">
+          {{ isSubmitting ? 'Updating...' : 'Update Task' }}
+        </button>
+        <button type="button" (click)="goBack()">Cancel</button>
       </form>
     </div>
-  `
+  `,
+  styleUrls: ['./task-edit.css']
 })
-export class TaskEdit {
-  task: Task = { title: '', description: '' };
-  taskIndex: number = -1;
+export class TaskEdit implements OnInit {
+  taskForm = new FormGroup({
+    title: new FormControl('', Validators.required),
+    description: new FormControl('')
+  });
   
+  isSubmitting = false;
+  errorMessage: string | null = null;
+  private currentTask: Task | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private taskService: TaskService
-  ) {
+  ) {}
+
+  ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
+    
     if (id) {
+      const taskIndex = Number(id);
       const tasks = this.taskService.getTasks();
-      this.taskIndex = parseInt(id, 10);
-      if (tasks[this.taskIndex]) {
-        
-        this.task = { ...tasks[this.taskIndex] };
+      
+      if (taskIndex >= 0 && taskIndex < tasks.length) {
+        this.currentTask = tasks[taskIndex];
+        this.populateForm(this.currentTask);
+      } else {
+        this.errorMessage = 'Task not found';
       }
+    } else {
+      this.errorMessage = 'No task ID provided';
     }
+  }
+
+  private populateForm(task: Task) {
+    this.taskForm.patchValue({
+      title: task.title,
+      description: task.description || ''
+    });
   }
   
   onSubmit() {
-    if (this.taskIndex >= 0) {
-      this.taskService.updateTask(this.taskIndex, this.task);
+    if (this.taskForm.valid && this.currentTask) {
+      this.isSubmitting = true;
+      this.errorMessage = null;
+      
+      const updatedTask: Task = {
+        ...this.currentTask,
+        title: this.taskForm.value.title!,
+        description: this.taskForm.value.description || ''
+      };
+
+      // Use the API to update the task
+      const taskId = (this.currentTask as any).id;
+      
+      if (taskId) {
+        this.taskService.updateTaskAPI(taskId.toString(), updatedTask).subscribe({
+          next: (updatedTask) => {
+            console.log('Task updated successfully:', updatedTask);
+            this.router.navigate(['/tasks']);
+          },
+          error: (error) => {
+            console.error('Error updating task:', error);
+            this.errorMessage = 'Failed to update task. Please try again.';
+            this.isSubmitting = false;
+          }
+        });
+      } else {
+        this.errorMessage = 'Task ID not found';
+        this.isSubmitting = false;
+      }
+    } else {
+      this.taskForm.markAllAsTouched();
     }
-    this.router.navigate(['/tasks']);
   }
-  
-  cancel() {
+
+  goBack() {
     this.router.navigate(['/tasks']);
   }
 }

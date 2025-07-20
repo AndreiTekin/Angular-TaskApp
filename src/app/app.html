@@ -1,26 +1,25 @@
 <div class="app-container">
-  <header class="header">
-    <div class="container">
-      <h1>{{ title }}</h1>
-      <nav>
-        <a routerLink="/tasks" routerLinkActive="active">View Tasks</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="main-content">
+  @if (isAuthenticated) {
+    <header class="header">
     
-    @if (false) {
-      
-      <p>Task List:</p>
-      <div>
-        
-        <app-task-card *ngFor="let t of tasks" [task]="t"></app-task-card>
+      <div class="container">
+        <h1 (click)="navigateToTasks()" style="cursor: pointer;">{{ title }}</h1>
+        <nav>
+          <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+          <a routerLink="/tasks" routerLinkActive="active">All Tasks</a>
+          <a routerLink="/tasks/new" routerLinkActive="active">New Task</a>
+          <div class="user-menu">
+            <span class="user-name">{{ currentUser?.name || currentUser?.email }}</span>
+            <button (click)="logout()" class="logout-btn">Logout</button>
+          </div>
+        </nav>
       </div>
-      
-    }
-    
-    
-    <router-outlet></router-outlet>
-  </main>
+    </header>
+
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  } @else {
+      <router-outlet></router-outlet>
+  }
 </div>

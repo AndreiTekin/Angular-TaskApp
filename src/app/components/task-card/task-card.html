@@ -1,9 +1,11 @@
-<div class="task-card">
-  <h3>{{ task.title }}</h3>
+<div class="task-card" [class.completed]="task.completed">
+  <h3 [class.completed-title]="task.completed">{{ task.title }}</h3>
   <p>{{ task.description }}</p>
   <div class="card-actions">
-    <button (click)="markComplete()" class="complete-btn">Complete</button>
-    <a [routerLink]="['/tasks', index]" ><button class="view-btn">View</button></a>
-    <a [routerLink]="['/tasks', index, 'edit']" ><button class="edit-btn">Edit</button></a>
+    <button (click)="markComplete()" class="complete-btn" [disabled]="task.completed">
+      {{ task.completed ? 'Completed' : 'Complete' }}
+    </button>
+    <button (click)="onView()" class="view-btn">View</button>
+    <button (click)="onEdit()" class="edit-btn" [disabled]="task.completed">Edit</button>
   </div>
 </div>

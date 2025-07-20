@@ -31,6 +31,7 @@
 nav {
   display: flex;
   gap: 20px;
+  align-items: center;
 }
 
 nav a {
@@ -43,6 +44,33 @@ nav a {
 
 nav a:hover, nav a.active {
   background-color: #002984;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 20px;
+}
+
+.user-name {
+  color: white;
+  font-weight: 500;
+}
+
+.logout-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #d32f2f;
 }
 
 .main-content {
