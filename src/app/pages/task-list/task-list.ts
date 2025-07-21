@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ErrorMessage } from '../../components/error-message/error-message';
 import { TaskCard } from '../../components/task-card/task-card';
 import { Task } from '../../models/task.model';
@@ -8,7 +8,7 @@ import { Task } from '../../models/task.model';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [RouterLink, ErrorMessage, TaskCard],
+  imports: [ErrorMessage, TaskCard],
   templateUrl: './task-list.html' ,
   styleUrls: ['./task-list.css']
 })

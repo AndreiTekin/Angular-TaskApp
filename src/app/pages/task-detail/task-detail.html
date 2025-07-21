@@ -1,24 +1,24 @@
 <div class="container">
-      @if (task) {
-        <div class="card">
-          <h1>{{ task.title }}</h1>
-          <p>{{ task.description }}</p>
-          <div class="status">
-            Status: <span [class]="task.completed ? 'completed' : 'pending'">
-              {{ task.completed ? 'Completed' : 'Pending' }}
-            </span>
-          </div>
-          
-          <div class="buttons">
-            <button class="edit-btn" (click)="editTask()">Edit</button>
-            <button class="back-btn" (click)="goBack()">Back</button>
-          </div>
-        </div>
-      } @else {
-        <div class="card">
-          <p>Task not found</p>
-          <button class="back-btn" (click)="goBack()">Back</button>
-        </div>
-      }
+  @if (task) {
+  <div class="card">
+    <h1>{{ task.title }}</h1>
+    <p>{{ task.description }}</p>
+    <div class="status">
+      Status:
+      <span [class]="task.completed ? 'completed' : 'pending'">
+        {{ task.completed ? 'Completed' : 'Pending' }}
+      </span>
     </div>
-  
+
+    <div class="buttons">
+      <button class="edit-btn" (click)="editTask()">Edit</button>
+      <button class="back-btn" (click)="goBack()">Back</button>
+    </div>
+  </div>
+  } @else {
+  <div class="card">
+    <p>Task not found</p>
+    <button class="back-btn" (click)="goBack()">Back</button>
+  </div>
+  }
+</div>

@@ -1,27 +1,24 @@
 <div class="form-container">
-      <h2>Edit Task</h2>
-      
-      @if (errorMessage) {
-        <div style="color: red;">{{ errorMessage }}</div>
+  <h2>Edit Task</h2>
+
+  @if (errorMessage) {
+  <div style="color: red">{{ errorMessage }}</div>
+  }
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="title">Title</label>
+      <input id="title" type="text" formControlName="title" />
+      @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
+      <div style="color: red">Title is required</div>
       }
-      
-      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        <div>
-          <label for="title">Title</label>
-          <input id="title" type="text" formControlName="title">
-          @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
-            <div style="color: red;">Title is required</div>
-          }
-        </div>
-        
-        <div>
-          <label for="description">Description</label>
-          <textarea id="description" formControlName="description"></textarea>
-        </div>
-        
-        <button type="submit" [disabled]="taskForm.invalid || isSubmitting">
-          {{ isSubmitting ? 'Updating...' : 'Update Task' }}
-        </button>
-        <button type="button" (click)="goBack()">Cancel</button>
-      </form>
     </div>
+    <div>
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+    </div>
+    <button type="submit" [disabled]="taskForm.invalid || isSubmitting">
+      {{ isSubmitting ? 'Updating...' : 'Update Task' }}
+    </button>
+    <button type="button" (click)="goBack()">Cancel</button>
+  </form>
+</div>

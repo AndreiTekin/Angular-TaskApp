@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
@@ -8,15 +13,15 @@ import { Task } from '../../models/task.model';
   selector: 'app-task-edit',
   standalone: true,
   imports: [ReactiveFormsModule],
-  templateUrl:'./task-edit.html',
-  styleUrls: ['./task-edit.css']
+  templateUrl: './task-edit.html',
+  styleUrls: ['./task-edit.css'],
 })
 export class TaskEdit implements OnInit {
   taskForm = new FormGroup({
     title: new FormControl('', Validators.required),
-    description: new FormControl('')
+    description: new FormControl(''),
   });
-  
+
   isSubmitting = false;
   errorMessage: string | null = null;
   private currentTask: Task | null = null;
@@ -29,11 +34,11 @@ export class TaskEdit implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    
+
     if (id) {
       const taskIndex = Number(id);
       const tasks = this.taskService.getTasks();
-      
+
       if (taskIndex >= 0 && taskIndex < tasks.length) {
         this.currentTask = tasks[taskIndex];
         this.populateForm(this.currentTask);
@@ -48,35 +53,33 @@ export class TaskEdit implements OnInit {
   private populateForm(task: Task) {
     this.taskForm.patchValue({
       title: task.title,
-      description: task.description || ''
+      description: task.description || '',
     });
   }
-  
+
   onSubmit() {
     if (this.taskForm.valid && this.currentTask) {
       this.isSubmitting = true;
       this.errorMessage = null;
-      
+
       const updatedTask: Task = {
-        ...this.currentTask,
+        id: this.currentTask!.id,
         title: this.taskForm.value.title!,
-        description: this.taskForm.value.description || ''
+        description: this.taskForm.value.description || '',
+        completed: this.currentTask!.completed,
       };
 
-      
       const taskId = (this.currentTask as any).id;
-      
+
       if (taskId) {
         this.taskService.updateTask(taskId.toString(), updatedTask).subscribe({
-          next: (updatedTask: Task) => {
-            console.log('Task updated successfully:', updatedTask);
+          next: () => {
             this.router.navigate(['/tasks']);
           },
-          error: (error: any) => {
-            console.error('Error updating task:', error);
+          error: () => {            
             this.errorMessage = 'Failed to update task. Please try again.';
             this.isSubmitting = false;
-          }
+          },
         });
       } else {
         this.errorMessage = 'Task ID not found';

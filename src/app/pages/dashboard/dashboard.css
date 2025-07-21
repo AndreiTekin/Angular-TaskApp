@@ -1,130 +1,124 @@
 .dashboard {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    
-    .dashboard-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .welcome-section h1 {
-      margin: 0;
-      color: #333;
-    }
-    
-    .welcome-section p {
-      margin: 0.5rem 0 0 0;
-      color: #666;
-    }
-    
-        
-    .dashboard-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    
-    .stat-card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    
-    .stat-card h3 {
-      margin: 0;
-      font-size: 2rem;
-      color: #3f51b5;
-    }
-    
-    .stat-card p {
-      margin: 0.5rem 0 0 0;
-      color: #666;
-    }
-    
-    .dashboard-actions {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    
-    .action-btn {
-      padding: 0.75rem 1.5rem;
-      border-radius: 4px;
-      text-decoration: none;
-      font-weight: 500;
-      display: inline-block;
-    }
-    
-    .action-btn.primary {
-      background-color: #3246b5;
-      color: white;
-    }
-    
-    .action-btn.secondary {
-      background-color: #3246b5;
-      color: white;
-    }
-    
-    .recent-tasks {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .recent-tasks h2 {
-      margin-top: 0;
-      color: #333;
-    }
-    
-    .task-list {
-      display: grid;
-      gap: 1rem;
-    }
-    
-    .task-item {
-      padding: 1rem;
-      border: 1px solid #eee;
-      border-radius: 4px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .task-item h4 {
-      margin: 0;
-      color: #333;
-    }
-    
-    .task-item p {
-      margin: 0.25rem 0 0 0;
-      color: #666;
-      font-size: 0.9rem;
-    }
-    
-    .task-status {
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      background-color: #a06813;
-      color: white;
-    }
-    
-    .task-status.completed {
-      background-color: #007bff;
-    }
-    
-    .no-tasks {
-      text-align: center;
-      color: #666;
-      font-style: italic;
-    }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.welcome-section h1 {
+  margin: 0;
+  color: #333;
+}
+
+.welcome-section p {
+  margin: 0.5rem 0 0 0;
+  color: #666;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.stat-card h3 {
+  margin: 0;
+  font-size: 2rem;
+  color: #3f51b5;
+}
+
+.stat-card p {
+  margin: 0.5rem 0 0 0;
+  color: #666;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.action-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.action-btn {
+  background-color: #3246b5;
+  color: white;
+}
+
+.recent-tasks {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recent-tasks h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.task-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.task-item {
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-item h4 {
+  margin: 0;
+  color: #333;
+}
+
+.task-item p {
+  margin: 0.25rem 0 0 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.task-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  background-color: #a06813;
+  color: white;
+}
+
+.task-status.completed {
+  background-color: #007bff;
+}
+
+.no-tasks {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}

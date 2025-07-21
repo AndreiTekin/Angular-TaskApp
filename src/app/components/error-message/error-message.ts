@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output,EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-error-message',
@@ -33,7 +33,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ErrorMessage {
   @Input() message: string | null = null;
-  
+  @Output() dismissed = new EventEmitter<void>();
   dismiss() {
     this.message = null;
   }

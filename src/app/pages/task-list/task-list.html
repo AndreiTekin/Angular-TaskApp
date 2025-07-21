@@ -7,7 +7,7 @@
 				<button class="back-btn" (click)="goBack()">Back</button>
       </div> 
 			</div>         
-      <app-error-message [message]="errorMessage"></app-error-message>
+      <app-error-message [message]="errorMessage" (dismissed)="errorMessage = null"></app-error-message>
       <div class="task-grid">
         @for (task of tasks; let i = $index; track task.id || i) {
           <app-task-card 
