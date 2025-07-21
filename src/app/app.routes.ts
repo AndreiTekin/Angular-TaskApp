@@ -11,13 +11,13 @@ import { authGuard, publicGuard } from './guards/auth.guard';
 export const routes: Routes = [
   { path: 'login', component: Login, canActivate: [publicGuard] },
   { path: 'signup', component: Signup, canActivate: [publicGuard] },
-  
+
   { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
   { path: 'tasks', component: TaskList, canActivate: [authGuard] },
   { path: 'tasks/new', component: TaskForm, canActivate: [authGuard] },
   { path: 'tasks/:id/edit', component: TaskEdit, canActivate: [authGuard] },
   { path: 'tasks/:id', component: TaskDetail, canActivate: [authGuard] },
-  
+
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: '/dashboard' } 
-]
+  { path: '**', redirectTo: '/dashboard' },
+];

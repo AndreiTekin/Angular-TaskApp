@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { User, LoginRequest, SignupRequest, AuthResponse } from '../models/auth.model';
+import {
+  User,
+  LoginRequest,
+  SignupRequest,
+  AuthResponse,
+} from '../models/auth.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private readonly API_URL = 'http://localhost:3000/api/auth';
@@ -21,7 +26,7 @@ export class AuthService {
   private checkAuthState(): void {
     const token = this.getToken();
     const user = this.getStoredUser();
-    
+
     if (token && user) {
       this.currentUserSubject.next(user);
       this.isAuthenticatedSubject.next(true);
@@ -29,9 +34,10 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.API_URL}/login`, credentials)
+    return this.http
+      .post<AuthResponse>(`${this.API_URL}/login`, credentials)
       .pipe(
-        tap(response => {
+        tap((response) => {
           this.setToken(response.token);
           this.setUser(response.user);
           this.currentUserSubject.next(response.user);
@@ -41,9 +47,10 @@ export class AuthService {
   }
 
   signup(userData: SignupRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.API_URL}/signup`, userData)
+    return this.http
+      .post<AuthResponse>(`${this.API_URL}/signup`, userData)
       .pipe(
-        tap(response => {
+        tap((response) => {
           this.setToken(response.token);
           this.setUser(response.user);
           this.currentUserSubject.next(response.user);

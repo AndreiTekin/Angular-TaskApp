@@ -1,37 +1,38 @@
 <div class="app-container">
   @if (isAuthenticated) {
-    <header class="header">
-      
-      
-          <div class="container">
-        <h1 (click)="navigateToDashBoard()" style="cursor: pointer;">{{ title }}</h1>
-        <nav>
-          
-                    
-          
-        </nav>
-        <div class = "off-screen-menu" [class.active]="mobileMenuOpen">
+  <header class="header">
+    <div class="container">
+      <h1 (click)="navigateToDashBoard()" style="cursor: pointer">
+        {{ title }}
+      </h1>
+      <nav></nav>
+      <div class="off-screen-menu" [class.active]="mobileMenuOpen">
         <ul>
-          <li (click)="navigateToDashBoard()" class="dashboard-btn">Dashboard</li>
-          <li (click)="navigateToTasks()" class="tasks-btn">Tasks</li>    
+          <li (click)="navigateToDashBoard()" class="dashboard-btn">
+            Dashboard
+          </li>
+          <li (click)="navigateToTasks()" class="tasks-btn">Tasks</li>
           <li (click)="logout()" class="logout-btn">Logout</li>
         </ul>
       </div>
       <nav>
-        <div class="ham-menu" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()">
+        <div
+          class="ham-menu"
+          [class.active]="mobileMenuOpen"
+          (click)="toggleMobileMenu()"
+        >
           <span></span>
           <span></span>
           <span></span>
-
         </div>
       </nav>
-      </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="main-content">
-      <router-outlet></router-outlet>
-    </main>
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
   } @else {
-      <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
   }
 </div>

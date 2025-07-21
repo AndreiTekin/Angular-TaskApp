@@ -161,24 +161,19 @@ export class TaskService {
   private getErrorMessage(error: HttpErrorResponse): string {
     if (error.status === 0) {
       return 'Unable to connect to server. Please check if the server is running.';
-    }
-    
+    }    
     if (error.status === 401) {
       return 'Authentication failed. Please login again.';
-    }
-    
+    }    
     if (error.status === 403) {
       return 'Access denied. You do not have permission to perform this action.';
-    }
-    
+    }    
     if (error.status === 404) {
       return 'Resource not found.';
-    }
-    
+    }    
     if (error.status === 500) {
       return 'Server error. Please try again later or contact support.';
-    }
-    
+    }    
     return error.error?.message || `An error occurred (${error.status})`;
   }
 
@@ -186,7 +181,6 @@ export class TaskService {
   getTasks(): Task[] {
     return [...this.tasks];
   }
-
   getTask(index: number): Task | null {
     if (index < 0 || index >= this.tasks.length) {
       return null;
