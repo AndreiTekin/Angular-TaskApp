@@ -10,6 +10,14 @@ const JWT_SECRET = 'your-secret-key';
 app.use(cors());
 app.use(express.json());
 
+// Add anti-caching middleware
+app.use((req, res, next) => {
+  res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.header('Pragma', 'no-cache');
+  res.header('Expires', '0');
+  next();
+});
+
 let users = [];
 let tasks = [];
 let taskIdCounter = 1;
@@ -85,40 +93,62 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 const authenticate = (req, res, next) => {
+  console.log('=== AUTHENTICATE MIDDLEWARE ===');
+  console.log('Request headers:', req.headers);
+  console.log('Authorization header:', req.header('Authorization'));
+  
   const token = req.header('Authorization')?.replace('Bearer ', '');
+  console.log('Extracted token:', token);
   
   if (!token) {
+    console.log('❌ No token provided');
     return res.status(401).json({ message: 'Access denied' });
   }
   
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
+    console.log('✅ Token decoded successfully:', decoded);
     req.userId = decoded.userId;
+    console.log('Set req.userId to:', req.userId);
     next();
   } catch (error) {
+    console.error('❌ Token verification failed:', error.message);
     res.status(401).json({ message: 'Invalid token' });
   }
 };
 
 app.get('/api/tasks', authenticate, (req, res) => {
-	if (!req.userId){
-		console.log (`Received bad request for null user ID ${JSON.stringify(req)}`);
-		res.status(400).json({ message: 'Bad request, no user ID'})
+  console.log('=== GET /api/tasks called ===');
+  console.log('User ID from token:', req.userId);
+  console.log('Tasks array length:', tasks.length);
+  console.log('All tasks in memory:', tasks);
+  
+  if (!req.userId) {
+    console.log('❌ No user ID found');
+    return res.status(400).json({ message: 'Bad request, no user ID' });
   }
+  
   try {
-		console.log(`Received GET request for task: ${JSON.stringify(req)}`);
-		const userTasks = tasks.filter(task => task.userId === req.userId); 
-		console.log(`Fetching tasks for user ${req.userId}:`, userTasks.length);
-		if (userTasks.length === 0 ) {
-			res.status(404).json({ message: "User has no Tasks"});
-		}
-		res.json(userTasks);
-	} catch (error){
-		res.status(500).json({ message: 'Server Error'});
-	}
+    console.log('About to filter tasks...');
+    const userTasks = tasks.filter(task => task.userId === req.userId); 
+    console.log(`✅ Fetching tasks for user ${req.userId}:`, userTasks.length);
+    console.log('User tasks:', userTasks);
+    
+    console.log('About to send response...');
+    res.json(userTasks);
+    console.log('Response sent successfully');
+  } catch (error) {
+    console.error('❌ Error in GET /api/tasks:', error);
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ message: 'Server Error' });
+  }
 });
 
 app.post('/api/tasks', authenticate, (req, res) => {
+  console.log('=== POST /api/tasks called ===');
+  console.log('User ID from token:', req.userId);
+  console.log('Request body:', req.body);
+  
   const { title, description } = req.body;
   
   const task = {
@@ -131,21 +161,27 @@ app.post('/api/tasks', authenticate, (req, res) => {
   };
   
   tasks.push(task);
-  console.log('Task created:', task);
+  console.log('✅ Task created:', task);
   res.json(task);
 });
 
 app.put('/api/tasks/:id', authenticate, (req, res) => {
+  console.log('=== PUT /api/tasks/:id called ===');
+  console.log('Task ID:', req.params.id);
+  console.log('User ID from token:', req.userId);
+  console.log('Request body:', req.body);
+  
   const taskId = parseInt(req.params.id);
   const { title, description, completed } = req.body;
   
   const taskIndex = tasks.findIndex(t => t.id === taskId && t.userId === req.userId);
   if (taskIndex === -1) {
+    console.log('❌ Task not found or user mismatch');
     return res.status(404).json({ message: 'Task not found' });
   }
   
   tasks[taskIndex] = { ...tasks[taskIndex], title, description, completed };
-  console.log('Task updated:', tasks[taskIndex]);
+  console.log('✅ Task updated:', tasks[taskIndex]);
   res.json(tasks[taskIndex]);
 });
 
@@ -172,15 +208,20 @@ app.patch('/api/tasks/:id/complete', authenticate, (req, res) => {
 });
 
 app.delete('/api/tasks/:id', authenticate, (req, res) => {
+  console.log('=== DELETE /api/tasks/:id called ===');
+  console.log('Task ID:', req.params.id);
+  console.log('User ID from token:', req.userId);
+  
   const taskId = parseInt(req.params.id);
   
   const taskIndex = tasks.findIndex(t => t.id === taskId && t.userId === req.userId);
   if (taskIndex === -1) {
+    console.log('❌ Task not found or user mismatch');
     return res.status(404).json({ message: 'Task not found' });
   }
   
   tasks.splice(taskIndex, 1);
-  console.log('Task deleted:', taskId);
+  console.log('✅ Task deleted:', taskId);
   res.json({ message: 'Task deleted' });
 });
 

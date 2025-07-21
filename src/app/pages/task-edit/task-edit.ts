@@ -8,35 +8,7 @@ import { Task } from '../../models/task.model';
   selector: 'app-task-edit',
   standalone: true,
   imports: [ReactiveFormsModule],
-  template: `
-    <div class="form-container">
-      <h2>Edit Task</h2>
-      
-      @if (errorMessage) {
-        <div style="color: red;">{{ errorMessage }}</div>
-      }
-      
-      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        <div>
-          <label for="title">Title</label>
-          <input id="title" type="text" formControlName="title">
-          @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
-            <div style="color: red;">Title is required</div>
-          }
-        </div>
-        
-        <div>
-          <label for="description">Description</label>
-          <textarea id="description" formControlName="description"></textarea>
-        </div>
-        
-        <button type="submit" [disabled]="taskForm.invalid || isSubmitting">
-          {{ isSubmitting ? 'Updating...' : 'Update Task' }}
-        </button>
-        <button type="button" (click)="goBack()">Cancel</button>
-      </form>
-    </div>
-  `,
+  templateUrl:'./task-edit.html',
   styleUrls: ['./task-edit.css']
 })
 export class TaskEdit implements OnInit {
@@ -91,16 +63,16 @@ export class TaskEdit implements OnInit {
         description: this.taskForm.value.description || ''
       };
 
-      // Use the API to update the task
+      
       const taskId = (this.currentTask as any).id;
       
       if (taskId) {
-        this.taskService.updateTaskAPI(taskId.toString(), updatedTask).subscribe({
-          next: (updatedTask) => {
+        this.taskService.updateTask(taskId.toString(), updatedTask).subscribe({
+          next: (updatedTask: Task) => {
             console.log('Task updated successfully:', updatedTask);
             this.router.navigate(['/tasks']);
           },
-          error: (error) => {
+          error: (error: any) => {
             console.error('Error updating task:', error);
             this.errorMessage = 'Failed to update task. Please try again.';
             this.isSubmitting = false;

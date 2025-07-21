@@ -2,10 +2,15 @@
   <h3 [class.completed-title]="task.completed">{{ task.title }}</h3>
   <p>{{ task.description }}</p>
   <div class="card-actions">
-    <button (click)="markComplete()" class="complete-btn" [disabled]="task.completed">
+    <button (click)="markComplete()" class="complete-btn" [class.completed]="task.completed" [disabled]="task.completed">
       {{ task.completed ? 'Completed' : 'Complete' }}
     </button>
     <button (click)="onView()" class="view-btn">View</button>
-    <button (click)="onEdit()" class="edit-btn" [disabled]="task.completed">Edit</button>
+    @if (!task.completed) {
+      <button (click)="onEdit()" class="edit-btn">Edit</button>
+    }
+    @if (task.completed) {
+      <button (click)="onDelete()" class="delete-btn">Delete</button>
+    }
   </div>
 </div>

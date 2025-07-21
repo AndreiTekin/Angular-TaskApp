@@ -9,30 +9,7 @@ import { Task } from '../../models/task.model';
   selector: 'app-task-list',
   standalone: true,
   imports: [RouterLink, ErrorMessage, TaskCard],
-  template: `
-    <div class="task-list">
-      <div class="header-row">
-        <h2>My Tasks</h2>
-        <a routerLink="/tasks/new" class="btn btn-add">Add New Task</a>
-      </div>          
-      <app-error-message [message]="errorMessage"></app-error-message>
-      <div class="task-grid">
-        @for (task of tasks; let i = $index; track task.id || i) {
-          <app-task-card 
-            [task]="task" 
-            [index]="i"
-            (complete)="completeTask($event)"
-            (edit)="editTask($event)"
-            (view)="viewTask($event)">
-          </app-task-card>
-        } @empty {
-          <div class="empty-state">
-            <p>No tasks available. Add your first task!</p>
-          </div>
-        }
-      </div>
-    </div>
-  `,
+  templateUrl: './task-list.html' ,
   styleUrls: ['./task-list.css']
 })
 export class TaskList implements OnInit {
@@ -64,6 +41,31 @@ loadTasks() {
   });
 }
 
+onDeleteTask(index: number) {
+  console.log('Parent - Deleting task at index:', index);
+  
+  // Get the task to delete
+  const taskToDelete = this.tasks[index];
+  
+  // Check if task and id exist
+  if (taskToDelete && taskToDelete.id !== undefined) {
+    // Convert id to string to match service method signature
+    this.taskService.deleteTask(taskToDelete.id.toString()).subscribe({
+      next: () => {
+        console.log('Task deleted successfully');
+        // Remove from local array
+        this.tasks.splice(index, 1);
+      },
+      error: (error) => {
+        console.error('Error deleting task:', error);
+      }
+    });
+  } else {
+    console.error('Task or task ID not found');
+  }
+}
+
+
 completeTask(index: number) {
   console.log('🔥 TaskList - completeTask called with index:', index);
   console.log('🔥 Available tasks:', this.tasks);
@@ -92,6 +94,14 @@ editTask(event: { task: Task, index: number }) {
   const { task, index } = event;
   this.router.navigate(['/tasks', index, 'edit']);
 }
+
+newTask(){
+  this.router.navigate(['/tasks/new'])
+}
+
+goBack() {
+    this.router.navigate(['/dashboard']);
+  }
 
 viewTask(event: { task: Task, index: number }) {
   const { task, index } = event;

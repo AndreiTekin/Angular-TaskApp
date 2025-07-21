@@ -1,0 +1,49 @@
+    <div class="dashboard">
+      <div class="dashboard-header">
+        <div class="welcome-section">
+          <h1>Welcome back, {{ user?.name || user?.email }}!</h1>
+          <p>Here's your task overview</p>
+        </div>
+        
+      </div>
+      
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <h3>{{ totalTasks }}</h3>
+          <p>Total Tasks</p>
+        </div>
+        <div class="stat-card">
+          <h3>{{ completedTasks }}</h3>
+          <p>Completed</p>
+        </div>
+        <div class="stat-card">
+          <h3>{{ pendingTasks }}</h3>
+          <p>Pending</p>
+        </div>
+      </div>
+      
+      <div class="dashboard-actions">
+        <a routerLink="/tasks" class="action-btn primary">View All Tasks</a>
+        <a routerLink="/tasks/new" class="action-btn secondary">Create New Task</a>
+      </div>
+      
+      <div class="recent-tasks">
+        <h2>Recent Tasks</h2>
+        @if (recentTasks.length > 0) {
+          <div class="task-list">
+            @for (task of recentTasks; track task) {
+              <div class="task-item">
+                <h4>{{ task.title }}</h4>
+                <p>{{ task.description }}</p>
+                <span class="task-status" [class.completed]="task.completed">
+                  {{ task.completed ? 'Completed' : 'Pending' }}
+                </span>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="no-tasks">No tasks yet. <a routerLink="/tasks/new">Create your first task!</a></p>
+        }
+      </div>
+    </div>
+  

@@ -8,35 +8,10 @@ import { Task } from '../../models/task.model';
   selector: 'app-task-form',
   standalone: true,
   imports: [ReactiveFormsModule],
-  template: `
-    <div>
-      <h2>Add New Task</h2>
-      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        <div>
-          <label for="title">Title</label>
-          <input id="title" type="text" formControlName="title">
-          @if (titleControl && titleControl.invalid && titleControl.touched) {
-            <div>Title is required</div>
-          }
-        </div>
-        
-        <div>
-          <label for="description">Description</label>
-          <textarea id="description" formControlName="description"></textarea>
-        </div>
-        
-        @if (errorMessage) {
-          <div style="color: red;">{{ errorMessage }}</div>
-        }
-        
-        <button type="submit" [disabled]="taskForm.invalid || isSubmitting">
-          {{ isSubmitting ? 'Adding...' : 'Add Task' }}
-        </button>
-        <button type="button" (click)="goBack()">Cancel</button>
-      </form>
-    </div>
-  `
+  styleUrls:['./task-form.css'],
+  templateUrl:'./task-form.html'    
 })
+
 export class TaskForm {
   taskForm = new FormGroup({
     title: new FormControl('', Validators.required),

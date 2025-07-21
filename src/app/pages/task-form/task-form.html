@@ -1,16 +1,11 @@
-<div class="form-container">
-      <h2>Edit Task</h2>
-      
-      @if (errorMessage) {
-        <div style="color: red;">{{ errorMessage }}</div>
-      }
-      
+<div class ="form-container">
+      <h2>Add New Task</h2>
       <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
         <div>
           <label for="title">Title</label>
           <input id="title" type="text" formControlName="title">
-          @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
-            <div style="color: red;">Title is required</div>
+          @if (titleControl && titleControl.invalid && titleControl.touched) {
+            <div>Title is required</div>
           }
         </div>
         
@@ -19,8 +14,12 @@
           <textarea id="description" formControlName="description"></textarea>
         </div>
         
+        @if (errorMessage) {
+          <div style="color: red;">{{ errorMessage }}</div>
+        }
+        
         <button type="submit" [disabled]="taskForm.invalid || isSubmitting">
-          {{ isSubmitting ? 'Updating...' : 'Update Task' }}
+          {{ isSubmitting ? 'Adding...' : 'Add Task' }}
         </button>
         <button type="button" (click)="goBack()">Cancel</button>
       </form>

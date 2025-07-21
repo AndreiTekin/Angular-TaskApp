@@ -12,16 +12,20 @@
     }
     
 		.complete-btn {
-			background-color: var(--primary-light);
+			background-color: #007bff;
 			color:white;
 		}
+    .complete-btn.completed{
+      background-color: #007bff;
+      opacity: 0.5;
+    }
     .view-btn {
-      background-color: var(--primary-light);
+      background-color: #3246b5;
       color: white;
     }
     
     .edit-btn {
-      background-color: var(--warning);
+      background-color: #3246b5;
       color: white;
     }
     .task-card {
@@ -39,6 +43,6 @@
     
     .task-card h3 {
       margin-top: 0;
-      color: var(--primary);
+      color: black;
     }
     

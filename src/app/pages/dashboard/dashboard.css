@@ -23,15 +23,7 @@
       color: #666;
     }
     
-    .logout-btn {
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    
+        
     .dashboard-stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -73,12 +65,12 @@
     }
     
     .action-btn.primary {
-      background-color: #3f51b5;
+      background-color: #3246b5;
       color: white;
     }
     
     .action-btn.secondary {
-      background-color: var(--success);
+      background-color: #3246b5;
       color: white;
     }
     
@@ -123,12 +115,12 @@
       padding: 0.25rem 0.75rem;
       border-radius: 20px;
       font-size: 0.8rem;
-      background-color: #ff9800;
+      background-color: #a06813;
       color: white;
     }
     
     .task-status.completed {
-      background-color: #4caf50;
+      background-color: #007bff;
     }
     
     .no-tasks {
