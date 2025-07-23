@@ -2,7 +2,7 @@
 <h2>Project description:</h2>
 
 
-This project is  task management web application that allows users to log in to a customized portal and organize/manage tasks built on using MEAN stack
+This project is a task management web application that allows users to log in to a customized portal and organize/manage tasks built on using MEAN stack
 
 
 Some notable elements of the app:
