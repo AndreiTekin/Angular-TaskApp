@@ -68,6 +68,29 @@ Backend on Render: https://angular-taskapp.onrender.com/
 Frontend using Vercel: https://angular-task-app-seven.vercel.app/
 
 
+<h2>ScreenShots</h2>
+
+### Dashboard
+![Dashboard Screenshot](images/dashboard.png)
+
+### Populated Dashboard
+![Populated Dashboard Screenshot](images/populated-dashboard.png)
+
+### Login
+![Login Screenshot](images/Login.png)
+
+### Sign-up
+![Sign-up Screenshot](images/Sign-up.png)
+
+### Task List
+![Task List Screenshot](images/TaskList.png)
+
+### Task Edit
+![Task Edit Screenshot](images/TaskEdit.png)
+
+### Task Form
+![Task Form Screenshot](images/TaskForm.png)
+
 
 
 
