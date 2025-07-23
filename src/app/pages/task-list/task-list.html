@@ -11,14 +11,13 @@
     (dismissed)="errorMessage = null"
   ></app-error-message>
   <div class="task-grid">
-    @for (task of tasks; let i = $index; track task.id || i) {
+    @for (task of tasks; track task.id) {
     <app-task-card
-      [task]="task"
-      [index]="i"
-      (complete)="completeTask($event)"
-      (edit)="editTask($event)"
-      (view)="viewTask($event)"
-      (delete)="onDeleteTask($event)"
+      [task]="task"     
+      (complete)="completeTask(task)"
+      (edit)="editTask(task)"
+      (view)="viewTask(task)"
+      (delete)="onDeleteTask(task)"
     >
     </app-task-card>
     } @empty {

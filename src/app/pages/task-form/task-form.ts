@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { Router } from '@angular/router';
-import { Task } from '../../models/task.model';
+import { NewTask } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-form',
@@ -37,18 +37,18 @@ export class TaskForm {
       this.isSubmitting = true;
       this.errorMessage = null;
 
-      const newTask: Task = {
+      const newTask: NewTask = {
         title: this.taskForm.value.title!,
         description: this.taskForm.value.description!,
         completed: false,
       };
-      
+
       this.taskService.createTask(newTask).subscribe({
-        next: () => {          
+        next: (createdTask) => {
           this.isSubmitting = false;
           this.router.navigate(['/tasks']);
         },
-        error: () => {          
+        error: () => {
           this.isSubmitting = false;
           this.errorMessage = 'Failed to create task. Please try again.';
         },

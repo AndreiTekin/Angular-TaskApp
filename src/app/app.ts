@@ -27,32 +27,25 @@ export class App implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.currentUser$.subscribe((user) => {
-      this.currentUser = user;
-    });
+  this.authService.currentUser$.subscribe((user) => {
+    this.currentUser = user;
+  });
 
-    this.authService.isAuthenticated$.subscribe((isAuth) => {
-      this.isAuthenticated = isAuth;
-      if (isAuth) {
-        // Load tasks from server initially
-        this.taskService.getAllTasks().subscribe({
-          next: (tasks) => {
-            console.log('✅ Tasks loaded successfully:', tasks);
-          },
-          error: (error) => {
-            console.error('❌ Failed to load tasks:', error);
-          },
-        });
-
-        // Subscribe to real-time task updates
-        this.taskService.tasks$.subscribe((tasks) => {
-          console.log('🔄 Tasks updated:', tasks.length, 'tasks');
+  this.authService.isAuthenticated$.subscribe((isAuth) => {
+    this.isAuthenticated = isAuth;
+    if (isAuth) {      
+      this.taskService.getAllTasks().subscribe({
+        next: (tasks) => {
+          console.log('Tasks loaded successfully:', tasks);
           this.tasks = tasks;
-        });
-      }
-    });
-  }
-
+        },
+        error: (error) => {
+          console.error('Failed to load tasks:', error);
+        },
+      });
+    }
+  });
+}
   toggleMobileMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }

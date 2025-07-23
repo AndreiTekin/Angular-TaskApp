@@ -117,6 +117,18 @@ const authenticate = (req, res, next) => {
   }
 };
 
+app.get('/api/tasks/:id', authenticate, (req, res) => {
+  const taskId = parseInt(req.params.id);
+  const userId = req.userId;
+  console.log(`=== GET /api/tasks/${taskId} called ===`);
+  const task = tasks.find(t => t.id === taskId && t.userId === userId);
+  if (!task) {
+    console.log('❌ Task not found or user mismatch');
+    return res.status(404).json({ message: 'Task not found' });
+  }
+  res.json(task);
+});
+
 app.get('/api/tasks', authenticate, (req, res) => {
   console.log('=== GET /api/tasks called ===');
   console.log('User ID from token:', req.userId);

@@ -5,14 +5,14 @@
   margin-top: 15px;
 }
 
-.view-btn, .edit-btn, .complete-btn {
+.view-btn, .delete-btn, .edit-btn, .complete-btn {
   padding: 10px 20px;
   border-radius: 4px;
   text-decoration: none;
   color: white;
 }
 
-.view-btn, .edit-btn {
+.view-btn, .delete-btn, .edit-btn {
   background-color: #3246b5;
 }
 

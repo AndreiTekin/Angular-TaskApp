@@ -33,18 +33,18 @@ export class TaskEdit implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const id = idParam ? Number(idParam) : null;
     if (id) {
-      const taskIndex = Number(id);
-      const tasks = this.taskService.getTasks();
-
-      if (taskIndex >= 0 && taskIndex < tasks.length) {
-        this.currentTask = tasks[taskIndex];
-        this.populateForm(this.currentTask);
-      } else {
-        this.errorMessage = 'Task not found';
-      }
+      this.taskService.getTaskById(id).subscribe({
+        next: (task) => {
+          this.currentTask = task;
+          this.populateForm(task);
+        },
+        error: () => {
+          this.errorMessage = 'Task not found';
+        },
+      });
     } else {
       this.errorMessage = 'No task ID provided';
     }
@@ -61,22 +61,20 @@ export class TaskEdit implements OnInit {
     if (this.taskForm.valid && this.currentTask) {
       this.isSubmitting = true;
       this.errorMessage = null;
-
       const updatedTask: Task = {
         id: this.currentTask!.id,
         title: this.taskForm.value.title!,
         description: this.taskForm.value.description || '',
         completed: this.currentTask!.completed,
       };
-
-      const taskId = (this.currentTask as any).id;
+      const taskId = this.currentTask!.id;
 
       if (taskId) {
-        this.taskService.updateTask(taskId.toString(), updatedTask).subscribe({
+        this.taskService.updateTask(taskId, updatedTask).subscribe({
           next: () => {
             this.router.navigate(['/tasks']);
           },
-          error: () => {            
+          error: () => {
             this.errorMessage = 'Failed to update task. Please try again.';
             this.isSubmitting = false;
           },

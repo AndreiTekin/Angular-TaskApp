@@ -9,17 +9,18 @@
   color: white;
   height: 100vh;
   width: 100%;
-  max-width: 450px;
+  max-width: 350px;
   position: fixed;
   top: 0;
   right: -450px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: left;
   text-align: center;
   font-size: 3rem;
   transition: 0.3s ease;
+  ;
 }
 
 .off-screen-menu.active {
@@ -35,6 +36,20 @@
   margin-right: 20px;
   position: relative;
   cursor: pointer;
+  ;
+}
+
+nav, nav ul, nav li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.off-screen-menu ul,
+.off-screen-menu li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .ham-menu span {
@@ -90,7 +105,7 @@
 
 .header h1 {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
 }
 
 nav {

@@ -12,7 +12,6 @@ import { Task } from '../../models/task.model';
 })
 export class TaskDetail implements OnInit {
   task: Task | undefined;
-  private taskIndex: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,21 +20,27 @@ export class TaskDetail implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const id = idParam ? Number(idParam) : null;
     if (id) {
-      this.taskIndex = parseInt(id, 10);
-      const tasks = this.taskService.getTasks();
-      this.task = tasks[this.taskIndex];
+      this.taskService.getTaskById(id).subscribe({
+        next: (task) => {
+          this.task = task;
+        },
+        error: () => {
+          this.task = undefined;
+        },
+      });
     }
   }
-
+  
   goBack() {
     this.router.navigate(['/tasks']);
   }
 
   editTask() {
-    if (this.taskIndex !== null) {
-      this.router.navigate(['/tasks', this.taskIndex, 'edit']);
+    if (this.task && this.task.id) {
+      this.router.navigate(['/tasks', this.task.id, 'edit']);
     }
   }
 }

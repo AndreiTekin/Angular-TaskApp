@@ -35,15 +35,15 @@ export class TaskList implements OnInit {
     });
   }
 
-  onDeleteTask(index: number) {
-    const taskToDelete = this.tasks[index];
-    if (taskToDelete?.id) {
-      this.taskService.deleteTask(taskToDelete.id.toString()).subscribe({
+  onDeleteTask(task: Task) {
+    if (task?.id) {
+      this.taskService.deleteTask(task.id).subscribe({
         next: () => {
-          this.tasks.splice(index, 1);
+          this.loadTasks();
         },
         error: (error) => {
           console.error('Error deleting task:', error);
+          this.errorMessage = 'Failed to delete task';
         },
       });
     } else {
@@ -51,10 +51,9 @@ export class TaskList implements OnInit {
     }
   }
 
-  completeTask(index: number) {
-    const task = this.tasks[index];
+  completeTask(task: Task) {
     if (task && task.id) {
-      this.taskService.completeTask(task.id.toString()).subscribe({
+      this.taskService.completeTask(task.id).subscribe({
         next: () => {
           this.loadTasks();
         },
@@ -68,8 +67,8 @@ export class TaskList implements OnInit {
     }
   }
 
-  editTask(event: { index: number }) {
-    this.router.navigate(['/tasks', event.index, 'edit']);
+  editTask(task: Task) {
+    this.router.navigate(['/tasks', task.id, 'edit']);
   }
   newTask() {
     this.router.navigate(['/tasks/new']);
@@ -77,7 +76,7 @@ export class TaskList implements OnInit {
   goBack() {
     this.router.navigate(['/dashboard']);
   }
-  viewTask(event: { index: number }) {
-    this.router.navigate(['/tasks', event.index]);
+  viewTask(task: Task) {
+    this.router.navigate(['/tasks', task.id]);
   }
 }
