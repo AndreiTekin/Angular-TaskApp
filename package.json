@@ -40,7 +40,7 @@
     "typescript": "~5.8.2"
   },
   "description": "This project demonstrates proper utilization of Angular Fundamentals",
-  "main": "index.js",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AndreiTekin/Angular-TaskApp.git"
