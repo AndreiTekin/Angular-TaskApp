@@ -8,7 +8,15 @@ const bcrypt = require("bcryptjs");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET;
+const corsOptions = {
+  origin: [
+    "https://angular-task-app-seven.vercel.app/", 
+    "http://localhost:4200"
+  ],
+  credentials: true
+};
 
+app.use(cors(corsOptions));
 app.use(cors());
 app.use(express.json());
 
