@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Task, NewTask } from '../models/task.model';
 import { BehaviorSubject, Observable, tap, catchError, throwError } from 'rxjs';
+import { environment } from '../../environments/environment'
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private readonly API_URL = 'http://localhost:3000/api/tasks';    
+  private readonly API_URL = `${environment.apiUrl}/tasks`;  
   private errorSubject = new BehaviorSubject<string | null>(null);
   public error$ = this.errorSubject.asObservable();
 
