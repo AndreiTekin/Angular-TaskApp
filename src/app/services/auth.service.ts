@@ -7,12 +7,13 @@ import {
   SignupRequest,
   AuthResponse,
 } from '../models/auth.model';
+import { environment } from "../../environments/environment"
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly API_URL = 'http://localhost:3000/api/auth';
+  private readonly API_URL = `${environment.apiUrl}/auth`;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
