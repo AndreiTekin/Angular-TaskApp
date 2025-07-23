@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET;
 const corsOptions = {
   origin: [
-    "https://angular-task-app-seven.vercel.app/", 
+    "https://angular-task-app-seven.vercel.app", 
     "http://localhost:4200"
   ],
   credentials: true
